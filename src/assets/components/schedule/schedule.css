@@ -1,0 +1,82 @@
+h3 {
+  margin-bottom: 40px;
+}
+
+.calendar .react-calendar {
+  background-color: transparent;
+  border          : none;
+}
+
+.react-calendar__tile--active {
+  background-color: #E99E8F;
+}
+
+.react-calendar__tile--active {
+  background: #E99E8F !important;
+  color     : white;
+}
+
+.react-calendar__navigation button {
+  color           : #000;
+  background-color: transparent !important;
+}
+
+.react-calendar__month-view__weekdays div abbr {
+  text-decoration: none !important;
+}
+
+.react-calendar__tile--now{
+  background: none;
+}
+
+.container-md {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  height         : 100%;
+  max-height     : 670px;
+}
+
+.calendar .buttonNext {
+  width           : 100%;
+  background-color: transparent;
+  color           : #000;
+  border          : 1px solid #000;
+}
+
+.calendar .buttonNext:hover {
+  background-color: #E99E8F !important;
+}
+
+.time {
+  margin-top: 70px;
+  padding   : 0px;
+}
+
+.time .btn-primary{
+  border: 1px solid #000;
+}
+
+.time .btn-secondary {
+  border: 1px solid #000;
+}
+
+.time col {
+  max-width: 572px;
+}
+
+.time button {
+  width     : 100%;
+  background: transparent;
+  color     : #000;
+}
+
+.time button:hover,
+.time button:active,
+.time button:focus,
+.time button:focus-visible {
+  background-color: #E99E8F !important;
+  box-shadow: none;
+
+}
+

@@ -1,0 +1,109 @@
+.textNext {
+  width     : 100%;
+  text-align: left;
+  margin    : 4% 6%;
+  cursor    : pointer;
+}
+
+@media (max-width: 768px){
+
+}
+
+.form {
+  max-width : 500px;
+  margin    : 0 auto;
+  text-align: left;
+  margin-top: 20px;
+  padding: 30px;
+}
+
+.form button {
+  margin-top      : 20px;
+  background-color: transparent;
+  border          : 1px solid #000;
+  color           : #000;
+}
+
+.form button:hover {
+  background-color: #E99E8F !important;
+  color           : #fff;
+  border          : none;
+}
+
+.form-control:focus {
+  border-color: #fff;
+  box-shadow  : none;
+}
+
+.form-check-input:active,
+.form-check-input:focus {
+  fill        : none;
+  border-color: #fff;
+  box-shadow  : none;
+}
+
+.form-control::placeholder {
+  color: #b6b6b6;
+}
+
+input {
+  color: #000;
+}
+
+.buttonSchedule {
+  width : 100%;
+  height: 40px;
+}
+
+.buttonSchedule:active,
+.buttonSchedule:focus,
+.buttonSchedule:focus-visible {
+  background-color: #E99E8F !important;
+  border-color    : #E99E8F !important;
+  box-shadow      : none;
+  color           : #fff;
+}
+
+.form-check input:checked {
+  background-color: #E99E8F !important;
+  border-color    : #E99E8F;
+  box-shadow      : none;
+}
+
+h3 {
+  margin-bottom: 20px;
+}
+
+.modal-body {
+  margin: 20px;
+}
+
+.incorretDate {
+  color    : #f50303;
+  font-size: 12px;
+}
+
+.alert-danger {
+  position: absolute;
+  top     : 0;
+  width   : 100%;
+  height  : 60px;
+}
+
+.alert-success {
+  position : fixed;
+  top      : 40%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+  z-index  : 2;
+}
+
+.modal-shadow {
+  background: rgba(61, 61, 61, 0.45);
+  z-index   : 1;
+  position  : fixed;
+  top       : 0;
+  left      : 0;
+  width     : 100%;
+  min-height: 110vh;
+}
