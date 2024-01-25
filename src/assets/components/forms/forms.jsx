@@ -10,53 +10,39 @@ import moment from 'moment';
 
 const Forms = (time) => {
   const [fullName, setFullName] = useState("");
-  const [validateFullName, setValidateFullName] = useState(false);
   const [email, setEmail] = useState("");
-  const [validateEmail, setValidateEmail] = useState(false);
   const [phone, setPhone] = useState("");
-  const [validatePhone, setValidatePhone] = useState(false);
-  const [typeService, setTypeService] = useState("");
+  const [typeService, setTypeService] = useState("spa");
   const [isOpen, setIsOpen] = useState(false);
-  const [isInvalid, setIsInvalid] = useState(false);
+  const [formValidated, setFormValidated] = useState(false);
 
-  function handleValidateForms() {
-    const regexFullName = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-    const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const regexPhone =
-      /^\([1-9]{2}\) (?:[2-9][0-9]{3,4}-[0-9]{4}|9[0-9]{4}-[0-9]{4})$/;
-    setValidateFullName(regexFullName.test(fullName));
-    setValidateEmail(regexEmail.test(email));
-    setValidatePhone(regexPhone.test(phone));
+  function handleValidateForms(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
 
-    if (validateFullName && validateEmail && validatePhone) {
-      setIsOpen(true);
-      formatedDate();
-      setIsInvalid(false);
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
     } else {
-      setIsOpen(false);
-      setIsInvalid(true);
-      setTimeout(() => {
-        setIsInvalid(false);
-      }, "3000");
+      setIsOpen(true);
+      newRegistrerScheduleTime();
     }
+
+    setFormValidated(true);
   }
 
-  function formatedDate() {
-    const dateFormated = moment(time.data).format('DD/MM/YYYY');
 
-    newRegistrerScheduleTime(dateFormated);
-  }
-  const newRegistrerScheduleTime = async (formatDate) => {
+  const newRegistrerScheduleTime = () => {
+    const dateFormatted = moment(time.data).format('DD/MM/YYYY');
     const data = {
       tipoServico: typeService,
-      data: formatDate,
+      data: dateFormatted,
       horario: time.time,
       nomeCliente: fullName,
       emailCliente: email,
       telefoneCliente: phone,
     };
     try {
-      const response = await axios.post("http://localhost:8080/agenda", data, {
+      const response = axios.post("http://localhost:8080/agenda", data, {
         headers: {
           "Content-Type": "application/json",
           Origin: "http://localhost:5173",
@@ -79,7 +65,7 @@ const Forms = (time) => {
         Voltar
       </div>
 
-      <Form className="form">
+      <Form className="form" noValidate validated={formValidated} onSubmit={handleValidateForms}>
         <h3>Dados do cliente</h3>
         <Form.Group className="mb-3">
           <Form.Label>Nome Completo</Form.Label>
@@ -88,7 +74,12 @@ const Forms = (time) => {
             onChange={(event) => setFullName(event.target.value)}
             type="text"
             placeholder="Digite seu nome completo"
+            pattern="^[a-zA-ZÀ-ÿ\s'-çÇáéíóúÁÉÍÓÚãõÃÕâêîôÂÊÎÔäëïöüÄËÏÖÜ]+ [a-zA-ZÀ-ÿ\s'-çÇáéíóúÁÉÍÓÚãõÃÕâêîôÂÊÎÔäëïöüÄËÏÖÜ]+$"
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Por favor, insira um nome válido.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
@@ -97,18 +88,28 @@ const Forms = (time) => {
             onChange={(event) => setEmail(event.target.value)}
             type="email"
             placeholder="Digite seu e-mail"
+            pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6} ?"
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Por favor, insira um email válido.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Telefone</Form.Label>
           <Form.Control
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
-            type="phone"
+            type="tel"
             placeholder="(11) 99999-9999"
+            pattern="^\([1-9]{2}\) (?:[2-9][0-9]{3,4}-[0-9]{4}|9[0-9]{4}-[0-9]{4})$"
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Por favor, insira um número de telefone válido.
+          </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Group className="mb-3">
           <Form.Text className="text-muted">
             Selecione o tipo de serviço
           </Form.Text>
@@ -119,6 +120,7 @@ const Forms = (time) => {
             type="radio"
             label="Pé"
             name="typeService"
+            checked={typeService === "pé"}
           />
           <Form.Check
             onClick={() => {
@@ -127,6 +129,7 @@ const Forms = (time) => {
             type="radio"
             label="Mão"
             name="typeService"
+            checked={typeService === "mão"}
           />
           <Form.Check
             onClick={() => {
@@ -135,9 +138,10 @@ const Forms = (time) => {
             type="radio"
             label="Spa Pé e Mão"
             name="typeService"
+            checked={typeService === "spa"}
           />
         </Form.Group>
-        <Button className="buttonSchedule" onClick={handleValidateForms}>
+        <Button className="buttonSchedule" type="submit">
           Agendar
         </Button>
       </Form>
@@ -158,12 +162,6 @@ const Forms = (time) => {
           </div>
         </Alert>
         </>
-      )}
-
-      {isInvalid && (
-        <Alert variant="danger">
-          <Alert.Heading> Dados incorretos. Verifique novamente!</Alert.Heading>
-        </Alert>
       )}
     </>
   );

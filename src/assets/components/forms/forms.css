@@ -107,3 +107,11 @@ h3 {
   width     : 100%;
   min-height: 110vh;
 }
+
+.was-validated .form-check-input:valid~.form-check-label{
+  color: #000 !important;
+}
+
+.was-validated .form-check-input:valid{
+  border-color: #000 !important;
+}
